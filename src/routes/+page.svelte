@@ -1,7 +1,7 @@
 <script lang="ts">
   import { pb } from "$lib/pocketbase";
 
-  const posts = pb.collection("posts").getFullList({ sort: "-created" });
+  const posts = pb.collection("posts").getFullList({ sort: "-date" });
 
   posts.then((p) => console.log(p));
 </script>
