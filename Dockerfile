@@ -35,11 +35,8 @@ RUN ARCH=$(uname -m); \
 RUN unzip /tmp/pb.zip -d /pb/ && \
     rm /tmp/pb.zip
 
-RUN if [ -d "./pocketbase/pb_migrations" ]; then \
-    cp -r ./pocketbase/pb_migrations /pb/pb_migrations; \
-fi
-
 COPY --from=vite-build /app/build /pb/pb_public
+COPY --from=vite-build /app/pocketbase/pb_migrations /pb/pb_migrations
 
 EXPOSE 8080
 
