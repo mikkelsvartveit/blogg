@@ -16,14 +16,14 @@
       <div class="flex flex-col gap-1">
         <div class="mt-8 mb-6 h-px w-full bg-gray-200"></div>
 
-        <h2 class="text-xs font-medium text-gray-500">
+        <h2 class="text-sm font-medium text-gray-500">
           🗓️ {new Date(date).toDateString()}
         </h2>
 
-        <h3 class="text-xs font-medium text-gray-500">📍 {location}</h3>
+        <h3 class="text-sm font-medium text-gray-500">📍 {location}</h3>
 
         {#if description}
-          <p class="pt-1 text-sm">{description}</p>
+          <p class="pt-1">{description}</p>
         {/if}
 
         {#each images as filename}
