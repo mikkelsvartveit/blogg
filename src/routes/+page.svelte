@@ -7,12 +7,12 @@
 </script>
 
 <div class="mx-auto max-w-md px-3 py-8">
-  <h1 class="text-3xl">Mikkels Italiablogg</h1>
+  <h1 class="text-3xl">Mikkel i Italia</h1>
 
   {#await posts}
     <p>Loading...</p>
   {:then posts}
-    {#each posts as { id, images, location, description, date }}
+    {#each posts as { id, images, location, description, date } (id)}
       <div class="flex flex-col gap-1">
         <div class="mt-8 mb-6 h-px w-full bg-gray-200"></div>
 
@@ -26,7 +26,7 @@
           <p class="pt-1">{description}</p>
         {/if}
 
-        {#each images as filename}
+        {#each images as filename (filename)}
           <a href="/api/files/posts/{id}/{filename}" class="pt-3">
             <img
               class="rounded"
