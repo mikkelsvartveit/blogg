@@ -5,3 +5,6 @@ yarn.lock
 
 # pocketbase-typegen
 src/lib/pocketbase-typegen.ts
+
+# Pocketbase migrations
+pocketbase/pb_migrations
