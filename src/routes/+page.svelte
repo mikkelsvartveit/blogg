@@ -79,7 +79,9 @@
 
   {#if loading && posts.length === 0}
     <div class="flex flex-col items-center justify-center py-12">
-      <div class="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+      <div
+        class="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"
+      ></div>
       <p class="text-gray-500">Loading posts...</p>
     </div>
   {:else}
@@ -113,7 +115,9 @@
       <div bind:this={sentinel} class="h-1"></div>
       {#if loading}
         <div class="flex flex-col items-center justify-center py-8">
-          <div class="mb-3 h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-gray-500"></div>
+          <div
+            class="mb-3 h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-gray-500"
+          ></div>
           <div class="text-sm text-gray-500">Loading more posts...</div>
         </div>
       {/if}

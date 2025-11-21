@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev:sveltekit": "pnpm run typegen && vite dev",
+    "dev:sveltekit": "pnpm run typegen && vite dev --host",
     "dev:pocketbase": "cd pocketbase && ./pocketbase serve",
     "dev": "pnpm run '/^dev:.*/'",
     "build": "pnpm check && vite build",
