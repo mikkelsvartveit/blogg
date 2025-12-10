@@ -28,6 +28,14 @@ export default [
     },
   },
   {
-    ignores: ["build/", ".svelte-kit/", "dist/", "pocketbase/pb_data/"],
+    files: ["**/*.svelte.ts"],
+    languageOptions: {
+      parserOptions: {
+        parser: ts.parser,
+      },
+    },
+  },
+  {
+    ignores: ["build/", ".svelte-kit/", "dist/", "pocketbase/"],
   },
 ];

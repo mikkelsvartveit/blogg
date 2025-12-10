@@ -11,6 +11,8 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	Comments = "comments",
+	Likes = "likes",
 	Posts = "posts",
 	Users = "users",
 }
@@ -91,6 +93,23 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export type CommentsRecord = {
+	content: string
+	created?: IsoDateString
+	id: string
+	post: RecordIdString
+	updated?: IsoDateString
+	user: RecordIdString
+}
+
+export type LikesRecord = {
+	created?: IsoDateString
+	id: string
+	post: RecordIdString
+	updated?: IsoDateString
+	user: RecordIdString
+}
+
 export type PostsRecord = {
 	created?: IsoDateString
 	date: IsoDateString
@@ -120,6 +139,8 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> & BaseSystemFields<Texpand>
+export type LikesResponse<Texpand = unknown> = Required<LikesRecord> & BaseSystemFields<Texpand>
 export type PostsResponse<Texpand = unknown> = Required<PostsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -131,6 +152,8 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	comments: CommentsRecord
+	likes: LikesRecord
 	posts: PostsRecord
 	users: UsersRecord
 }
@@ -141,6 +164,8 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	comments: CommentsResponse
+	likes: LikesResponse
 	posts: PostsResponse
 	users: UsersResponse
 }
@@ -154,6 +179,8 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: '_mfas'): RecordService<MfasResponse>
 	collection(idOrName: '_otps'): RecordService<OtpsResponse>
 	collection(idOrName: '_superusers'): RecordService<SuperusersResponse>
+	collection(idOrName: 'comments'): RecordService<CommentsResponse>
+	collection(idOrName: 'likes'): RecordService<LikesResponse>
 	collection(idOrName: 'posts'): RecordService<PostsResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }
