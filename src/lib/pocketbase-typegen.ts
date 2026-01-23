@@ -94,12 +94,13 @@ export type SuperusersRecord = {
 }
 
 export type CommentsRecord = {
+	author_name: string
 	content: string
 	created?: IsoDateString
 	id: string
 	post: RecordIdString
 	updated?: IsoDateString
-	user: RecordIdString
+	user?: string
 }
 
 export type LikesRecord = {
@@ -107,7 +108,7 @@ export type LikesRecord = {
 	id: string
 	post: RecordIdString
 	updated?: IsoDateString
-	user: RecordIdString
+	user?: string
 }
 
 export type PostsRecord = {

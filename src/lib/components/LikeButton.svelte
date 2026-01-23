@@ -1,76 +1,56 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import { auth } from "$lib/auth.svelte";
+  import { getBrowserId } from "$lib/browser-id";
   import { pb } from "$lib/pocketbase";
 
   interface Props {
     postId: string;
     likeCount: number;
-    isLiked: boolean;
   }
 
-  let { postId, likeCount, isLiked }: Props = $props();
+  let { postId, likeCount }: Props = $props();
 
   let currentLikeCount = $state(likeCount);
-  let currentIsLiked = $state(isLiked);
-  let likeId = $state<string | null>(null);
+  let hasLiked = $state(false);
   let loading = $state(false);
 
-  // Fetch the user's like record if logged in
-  async function fetchUserLike() {
-    if (!auth.isLoggedIn || !auth.user) return;
+  // Check if the browser has already liked this post
+  async function checkIfLiked() {
+    const browserId = getBrowserId();
 
     try {
-      const result = await pb
+      await pb
         .collection("likes")
-        .getFirstListItem(`user = "${auth.user.id}" && post = "${postId}"`);
-      likeId = result.id;
-      currentIsLiked = true;
+        .getFirstListItem(`user = "${browserId}" && post = "${postId}"`);
+      hasLiked = true;
     } catch {
-      likeId = null;
-      currentIsLiked = false;
+      hasLiked = false;
     }
   }
 
-  // Initialize on mount if logged in
+  // Initialize on mount
   $effect(() => {
-    if (auth.isLoggedIn) {
-      fetchUserLike();
-    } else {
-      currentIsLiked = false;
-      likeId = null;
-    }
+    checkIfLiked();
   });
 
-  async function toggleLike() {
-    if (!auth.isLoggedIn) {
-      goto("/login/");
-      return;
-    }
-
-    if (loading) return;
+  async function handleLike() {
+    if (hasLiked || loading) return;
     loading = true;
 
+    const browserId = getBrowserId();
+
     // Optimistic update
-    const wasLiked = currentIsLiked;
-    currentIsLiked = !wasLiked;
-    currentLikeCount += wasLiked ? -1 : 1;
+    hasLiked = true;
+    currentLikeCount += 1;
 
     try {
-      if (wasLiked && likeId) {
-        await pb.collection("likes").delete(likeId);
-        likeId = null;
-      } else {
-        const record = await pb.collection("likes").create({
-          user: auth.user!.id,
-          post: postId,
-        });
-        likeId = record.id;
-      }
+      await pb.collection("likes").create({
+        user: browserId,
+        post: postId,
+      });
     } catch {
       // Revert on error
-      currentIsLiked = wasLiked;
-      currentLikeCount += wasLiked ? 1 : -1;
+      hasLiked = false;
+      currentLikeCount -= 1;
     } finally {
       loading = false;
     }
@@ -78,12 +58,14 @@
 </script>
 
 <button
-  onclick={toggleLike}
-  disabled={loading}
-  class="flex items-center gap-1 text-gray-600 hover:text-red-500 disabled:opacity-50"
-  aria-label={currentIsLiked ? "Slutt å like" : "Lik"}
+  onclick={handleLike}
+  disabled={loading || hasLiked}
+  class="flex items-center gap-1 text-gray-600 disabled:cursor-default {hasLiked
+    ? ''
+    : 'hover:text-red-500'}"
+  aria-label={hasLiked ? "Allerede likt" : "Lik"}
 >
-  {#if currentIsLiked}
+  {#if hasLiked}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

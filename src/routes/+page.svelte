@@ -136,11 +136,7 @@
         {/each}
 
         <div class="mt-3 flex items-center gap-4">
-          <LikeButton
-            postId={post.id}
-            likeCount={post.likeCount}
-            isLiked={false}
-          />
+          <LikeButton postId={post.id} likeCount={post.likeCount} />
 
           <a
             href="/post/{post.id}/#comments"

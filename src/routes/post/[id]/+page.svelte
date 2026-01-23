@@ -99,7 +99,7 @@
       {/if}
 
       <div class="mt-4 flex items-center gap-4">
-        <LikeButton postId={post.id} {likeCount} isLiked={false} />
+        <LikeButton postId={post.id} {likeCount} />
 
         <a
           href="#comments"
