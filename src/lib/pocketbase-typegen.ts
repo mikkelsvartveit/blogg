@@ -108,7 +108,7 @@ export type LikesRecord = {
 	id: string
 	post: RecordIdString
 	updated?: IsoDateString
-	user?: string
+	user: string
 }
 
 export type PostsRecord = {

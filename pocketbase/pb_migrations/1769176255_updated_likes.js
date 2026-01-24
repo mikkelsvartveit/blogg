@@ -7,7 +7,7 @@ migrate((app) => {
 
   // add field
   collection.fields.addAt(1, new Field({
-    "autogeneratePattern": "",
+    "autogeneratePattern": "[a-z0-9]{30}",
     "hidden": false,
     "id": "text2375276105",
     "max": 0,
